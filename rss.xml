@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Jonathan Creamer]]></title><description><![CDATA[Living, learning, developing. Write about what I do, what I love, and what I learn. Lonely Planet. JavaScript, React, Ruby, Node, Rails, C#, Microsoft MVP.]]></description><link>https://jonathancreamer.com</link><generator>RSS for Node</generator><lastBuildDate>Mon, 02 Sep 2019 16:41:09 GMT</lastBuildDate><item><title><![CDATA[How webpack decides what entry to load from a package]]></title><description><![CDATA[Today I was working on creating a node.js bundle using webpack 4, and came across a fun little doozie of an error which lead me to do a bit…]]></description><link>https://jonathancreamer.com/how-webpack-decides-what-entry-to-load-from-a-package-json/</link><guid isPermaLink="false">https://jonathancreamer.com/how-webpack-decides-what-entry-to-load-from-a-package-json/</guid><pubDate>Sun, 30 Sep 2018 07:03:47 GMT</pubDate><content:encoded>&lt;p&gt;Today I was working on creating a node.js bundle using webpack 4, and came across a fun little doozie of an error which lead me to do a bit of code spelunkery into how Webpack actually decides on what to load when you &lt;code class=&quot;language-text&quot;&gt;require&lt;/code&gt; something from &lt;code class=&quot;language-text&quot;&gt;node_modules&lt;/code&gt;.&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Jonathan Creamer]]></title><description><![CDATA[Living, learning, developing. Write about what I do, what I love, and what I learn. Lonely Planet. JavaScript, React, Ruby, Node, Rails, C#, Microsoft MVP.]]></description><link>https://jonathancreamer.com</link><generator>RSS for Node</generator><lastBuildDate>Mon, 02 Sep 2019 21:46:52 GMT</lastBuildDate><item><title><![CDATA[How webpack decides what entry to load from a package]]></title><description><![CDATA[Today I was working on creating a node.js bundle using webpack 4, and came across a fun little doozie of an error which lead me to do a bit…]]></description><link>https://jonathancreamer.com/how-webpack-decides-what-entry-to-load-from-a-package-json/</link><guid isPermaLink="false">https://jonathancreamer.com/how-webpack-decides-what-entry-to-load-from-a-package-json/</guid><pubDate>Sun, 30 Sep 2018 07:03:47 GMT</pubDate><content:encoded>&lt;p&gt;Today I was working on creating a node.js bundle using webpack 4, and came across a fun little doozie of an error which lead me to do a bit of code spelunkery into how Webpack actually decides on what to load when you &lt;code class=&quot;language-text&quot;&gt;require&lt;/code&gt; something from &lt;code class=&quot;language-text&quot;&gt;node_modules&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Most &lt;code class=&quot;language-text&quot;&gt;package.json&lt;/code&gt; files have a &lt;code class=&quot;language-text&quot;&gt;main&lt;/code&gt; in them, because it tells the “requirer” of the package what the entry point of the package is.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;The main field is a module ID that is the primary entry point to your program. &lt;a href=&quot;https://docs.npmjs.com/files/package.json#main&quot;&gt;https://docs.npmjs.com/files/package.json#main&lt;/a&gt;&lt;/p&gt;
@@ -46,7 +46,7 @@
 &lt;p&gt;The env key will be taken from process.env.BABEL_ENV, when this is not available then it uses process.env.NODE_ENV if even that is not available then it defaults to “development”.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;Alright so basically that means we’ve been running Babel as dev mode! &lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/content/images/2019/04/doh.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/doh-b7f6b9824d27cf281e77575445aa98f8.gif&quot;&gt;&lt;/p&gt;
 &lt;p&gt;What does that &lt;code class=&quot;language-text&quot;&gt;--env.production&lt;/code&gt; thing even do?&lt;/p&gt;
 &lt;p&gt;Well, according to &lt;a href=&quot;https://webpack.js.org/guides/environment-variables&quot;&gt;https://webpack.js.org/guides/environment-variables&lt;/a&gt;, all it does is make it so when you setup your webpack config, you actually export a function that gives you an &lt;code class=&quot;language-text&quot;&gt;env&lt;/code&gt;, and evidently you can also set your actual NODE_ENV like…&lt;/p&gt;
 &lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;js&quot;&gt;&lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;webpack &lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;env&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token constant&quot;&gt;NODE_ENV&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;local &lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;env&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;production &lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;progress&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -86,4 +86,373 @@
 &lt;p&gt;In webpack 4, what’s nice is, there is a webpack configuration setting called &lt;code class=&quot;language-text&quot;&gt;mode&lt;/code&gt;. And when you set &lt;code class=&quot;language-text&quot;&gt;mode: &amp;quot;production&amp;quot;&lt;/code&gt;, it goes ahead and sets up the DefinePlugin for you. &lt;/p&gt;
 &lt;p&gt;However, you still may run into a scenario where you need to make sure that the &lt;code class=&quot;language-text&quot;&gt;babel-loader&lt;/code&gt; knows your &lt;code class=&quot;language-text&quot;&gt;NODE_ENV=production&lt;/code&gt;. So, just keep a close eye on it.&lt;/p&gt;
 &lt;h1&gt;tldr;&lt;/h1&gt;
-&lt;p&gt;Make sure when you’re doing production webpack builds involving babel, particularly in webpack 3 where you don’t have the &lt;code class=&quot;language-text&quot;&gt;mode&lt;/code&gt; option, make sure to set &lt;code class=&quot;language-text&quot;&gt;NODE_ENV=production&lt;/code&gt; when you run webpack.&lt;/p&gt;</content:encoded></item></channel></rss>
+&lt;p&gt;Make sure when you’re doing production webpack builds involving babel, particularly in webpack 3 where you don’t have the &lt;code class=&quot;language-text&quot;&gt;mode&lt;/code&gt; option, make sure to set &lt;code class=&quot;language-text&quot;&gt;NODE_ENV=production&lt;/code&gt; when you run webpack.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Brite Future]]></title><description><![CDATA[The past almost 4 years I’ve spent at Lonely Planet are coming to an end, and I’m excited to be joining the Front End Platform Team at…]]></description><link>https://jonathancreamer.com/brite-future/</link><guid isPermaLink="false">https://jonathancreamer.com/brite-future/</guid><pubDate>Fri, 08 Jun 2018 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;The past almost 4 years I’ve spent at Lonely Planet are coming to an end, and I’m excited to be joining the Front End Platform Team at Eventbrite! When I started at Lonely Planet 4 years ago. React was barely a thing, node was at version 0.10.33, and Angular was juggernaut framework everyone was learning. I’ve learned a ton and can’t thank my team enough for the fun we’ve had over the last few years.&lt;/p&gt;
+&lt;p&gt;Eventbrite has a great set of values starting with…&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Bringing the world together through live experiences&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;It’ll be great to be a part of the team that helps bring not only the Eventbrite engineering team together, but also helps build a platform for anyone to enjoy experiences together.&lt;/p&gt;
+&lt;p&gt;It’s never easy to leave a job, especially after being there almost 4 years. But, I am very excited about what the future holds and can’t wait to start.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Debugging node and Jest tests with VS Code's Debugger]]></title><description><![CDATA[VS Code has become my favorite IDE for pretty much everything these days. There are so many great features it has to offer including the…]]></description><link>https://jonathancreamer.com/debugging-node-and-jest-tests-with-vs-codes-debuggger/</link><guid isPermaLink="false">https://jonathancreamer.com/debugging-node-and-jest-tests-with-vs-codes-debuggger/</guid><pubDate>Fri, 08 Jun 2018 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;https://code.visualstudio.com/&quot;&gt;VS Code&lt;/a&gt; has become my favorite IDE for pretty much everything these days. There are so many great features it has to offer including the ability to debug node.js.&lt;/p&gt;
+
+          &lt;div
+            class=&quot;gatsby-resp-iframe-wrapper&quot;
+            style=&quot;padding-bottom: 56.25%; position: relative; height: 0; overflow: hidden;margin-bottom: 1rem&quot;
+          &gt;
+            &lt;iframe src=&quot;https://www.youtube.com/embed/ZvIzxXv1dJU&quot; frameborder=&quot;0&quot; allowfullscreen style=&quot;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+          &quot;&gt;&lt;/iframe&gt;
+          &lt;/div&gt;
+          
+&lt;p&gt;Here is the &lt;code class=&quot;language-text&quot;&gt;launch.json&lt;/code&gt; I used to get the debugger working for me.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;json&quot;&gt;&lt;pre class=&quot;language-json&quot;&gt;&lt;code class=&quot;language-json&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;&quot;version&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;0.2.0&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;&quot;configurations&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;type&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;node&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;request&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;launch&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Run tests&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;program&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;${workspaceRoot}/node_modules/.bin/jest&quot;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Launch&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;type&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;node&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;request&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;launch&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;program&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;${workspaceRoot}/bin/www&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;stopOnEntry&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;args&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;cwd&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;${workspaceRoot}&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;preLaunchTask&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token null keyword&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;runtimeExecutable&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;${workspaceRoot}/node_modules/.bin/babel-node&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;runtimeArgs&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;
+        &lt;span class=&quot;token string&quot;&gt;&quot;--nolazy&quot;&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;env&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token property&quot;&gt;&quot;NODE_ENV&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;development&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token property&quot;&gt;&quot;ASSET_HOST&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;http://localhost:8081&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token property&quot;&gt;&quot;NO_WEBPACK_MIDDLEWARE&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;true&quot;&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;console&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;internalConsole&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;sourceMaps&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;outFiles&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded></item><item><title><![CDATA[Why would you NOT use TypeScript?]]></title><description><![CDATA[In a world where JavaScript is arguably the most popular tool for building software these days, it seems like it’s everywhere now. With node…]]></description><link>https://jonathancreamer.com/why-would-you-not-use-typescript/</link><guid isPermaLink="false">https://jonathancreamer.com/why-would-you-not-use-typescript/</guid><pubDate>Thu, 01 Feb 2018 07:03:47 GMT</pubDate><content:encoded>&lt;p&gt;In a world where JavaScript is arguably the &lt;a href=&quot;https://insights.stackoverflow.com/survey/2017#technology&quot;&gt;most popular&lt;/a&gt; tool for building software these days, it seems like it’s everywhere now. With node.js, it’s on the backend, with Electron it’s native on your machine, with React Native, it’s native on your phone. There’s no doubt that JavaScript is nothing but at least pervasive across so many ecosystems.&lt;/p&gt;
+&lt;p&gt;So, the next question I have is, if JavaScript is so popular, then TypeScript by nature of what is is, also should be popular. After all, in case you didn’t realize it…&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Any JavaScript you can possibly write which is at least ECMA stage 3 is valid TypeScript.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&quot;/itstrue-f12b540600a705b0b837b6f396d347b7.gif&quot;&gt;&lt;/p&gt;
+&lt;h3&gt;VSCode&lt;/h3&gt;
+&lt;p&gt;First and foremost, if you’re not using Visual Studio Code to write JavaScript, you should be, so &lt;a href=&quot;https://code.visualstudio.com/&quot;&gt;go get it&lt;/a&gt;, and also go get &lt;a href=&quot;http://vscodecandothat.com/&quot;&gt;all this stuff&lt;/a&gt; from &lt;a href=&quot;https://twitter.com/burkeholland&quot;&gt;Burke Holland&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Under the covers, the TypeScript compiler will do a lot of amazing things for you without you even having to think twice about it. The reason it’s able to do this is, VS Code is running your JavaScript through the TypeScript compiler whether you know it or not!&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/Microsoft/TypeScript/wiki/JavaScript-Language-Service-in-Visual-Studio&quot;&gt;https://github.com/Microsoft/TypeScript/wiki/JavaScript-Language-Service-in-Visual-Studio&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;On top of that, it also uses something called Automatic Type Definitions using the phenomenal &lt;a href=&quot;https://github.com/DefinitelyTyped/DefinitelyTyped&quot;&gt;Definitely Typed&lt;/a&gt; library of type definitions to automatically download types for thousands of popular JavaScript libraries.&lt;/p&gt;
+&lt;h3&gt;From JS to TS, TypeScript’s got you&lt;/h3&gt;
+&lt;p&gt;In the following example, we’re simply formatting a price string.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;ts&quot;&gt;&lt;pre class=&quot;language-ts&quot;&gt;&lt;code class=&quot;language-ts&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; formatPrice &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;num&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;symbol&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;$&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt;
+  &lt;span class=&quot;token template-string&quot;&gt;&lt;span class=&quot;token template-punctuation string&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;symbol&lt;/span&gt;&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;${&lt;/span&gt;num&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;toFixed&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token template-punctuation string&quot;&gt;`&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;token function&quot;&gt;formatPrice&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;1234&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;It could be easy to forget that if pass a string here, this function will asplode because &lt;code class=&quot;language-text&quot;&gt;toFixed&lt;/code&gt; doesn’t exist on a string.&lt;/p&gt;
+&lt;p&gt;Simply adding types can save you runtime bugs…&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;ts&quot;&gt;&lt;pre class=&quot;language-ts&quot;&gt;&lt;code class=&quot;language-ts&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; formatPrice &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;num&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;number&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;symbol&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;$&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt;
+  &lt;span class=&quot;token template-string&quot;&gt;&lt;span class=&quot;token template-punctuation string&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;symbol&lt;/span&gt;&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;${&lt;/span&gt;num&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;toFixed&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token template-punctuation string&quot;&gt;`&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;token function&quot;&gt;formatPrice&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;1234&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// num.toFixed is not a function&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;But, there’s even better news…&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 500px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/235bd949fabfd9286260b45b78419e3f/bb7aa/jstscheckmorpheus.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 60.6%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAMABQDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAID/8QAFgEBAQEAAAAAAAAAAAAAAAAAAAEC/9oADAMBAAIQAxAAAAHClxghl//EABoQAQEAAgMAAAAAAAAAAAAAAAIBABMDESH/2gAIAQEAAQUC3KTdcXKrST1QMfi//8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAwEBPwE//8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAgEBPwE//8QAGhABAQACAwAAAAAAAAAAAAAAAAERITEyUf/aAAgBAQAGPwKOI8TMdY0//8QAGxABAAMAAwEAAAAAAAAAAAAAAQARITFxocH/2gAIAQEAAT8h0INYrLubu2WDxEVLZusAfZhFBRP/2gAMAwEAAgADAAAAEPP/AP/EABcRAAMBAAAAAAAAAAAAAAAAAAABESH/2gAIAQMBAT8QTwp//8QAFxEBAAMAAAAAAAAAAAAAAAAAAAERIf/aAAgBAgEBPxCpa//EAB4QAQACAgEFAAAAAAAAAAAAAAEAESExQVFhkaHh/9oACAEBAAE/EFGfawvGtTG0aUeTcwo0KrM9wVtRtkbejECAiI/SE8EKBXjvP//Z&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;jstscheckmorpheus&quot;
+        title=&quot;jstscheckmorpheus&quot;
+        src=&quot;/static/235bd949fabfd9286260b45b78419e3f/bb7aa/jstscheckmorpheus.jpg&quot;
+        srcset=&quot;/static/235bd949fabfd9286260b45b78419e3f/e33f8/jstscheckmorpheus.jpg 293w,
+/static/235bd949fabfd9286260b45b78419e3f/bb7aa/jstscheckmorpheus.jpg 500w&quot;
+        sizes=&quot;(max-width: 500px) 100vw, 500px&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;You may or may not already be a big user of JSDoc, but if you are, you will be pleased as punch to know that as of a recent version of TypeScript, you can add &lt;code class=&quot;language-text&quot;&gt;// @ts-check&lt;/code&gt; to the top of a JavaScript file, and get typechcking in it!&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;js&quot;&gt;&lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;// @ts-check&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;/**
+ * Format a price
+ * @param num {number} The price
+ * @param symbol {string} The currency symbol
+ */&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; formatPrice &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;num&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; symbol &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;$&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token template-string&quot;&gt;&lt;span class=&quot;token template-punctuation string&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;${&lt;/span&gt;symbol&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;${&lt;/span&gt;num&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;toFixed&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token template-punctuation string&quot;&gt;`&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;token function&quot;&gt;formatPrice&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;1234&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 796px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/0a06308d525c0f782bc803daab5d81b7/bae62/format.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 34.04522613065327%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAYAAAAIy204AAAACXBIWXMAAAsSAAALEgHS3X78AAAA8klEQVQoz5VRSW7DMBDzO2JrGclabTmO0wRo+/93sSMJSNNDWvRAjBaKw6EGTRoumAbrCEIIKKVeQkr5KwatNTTVzQQpJn4kMU3igdrgP2BBBb9kpOOK5bggnwNmT83t7A0U31fiX84eDpUUcHnDXN6Rr5/I+wEXNXyqgoqhYRzHEqlNMZ5O7Hxk8HqcWn1uOBAZUCzI64LbbUPZMnxISNsF69sHQsrIwbFoQNrv/ex8Z17BvfELT9GzF12QEFPAskTsLHZw9c41EtkZLWOGUlyN7We18jtrCcaYH5/VMixr7Kii7MYy6XuU3rmSX33Ec4ZfTg7DQGFV9uIAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;format&quot;
+        title=&quot;format&quot;
+        src=&quot;/static/0a06308d525c0f782bc803daab5d81b7/bae62/format.png&quot;
+        srcset=&quot;/static/0a06308d525c0f782bc803daab5d81b7/bc34b/format.png 293w,
+/static/0a06308d525c0f782bc803daab5d81b7/da9f0/format.png 585w,
+/static/0a06308d525c0f782bc803daab5d81b7/bae62/format.png 796w&quot;
+        sizes=&quot;(max-width: 796px) 100vw, 796px&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Here’s more info about what all you can do with JSDoc… &lt;a href=&quot;https://github.com/Microsoft/TypeScript/wiki/JSDoc-support-in-JavaScript&quot;&gt;https://github.com/Microsoft/TypeScript/wiki/JSDoc-support-in-JavaScript&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;With VSCode you can enable full type typechecking with the following User Settings option…&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;ts&quot;&gt;&lt;pre class=&quot;language-ts&quot;&gt;&lt;code class=&quot;language-ts&quot;&gt;&lt;span class=&quot;token string&quot;&gt;&quot;javascript.implicitProjectConfig.checkJs&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;React&lt;/h3&gt;
+&lt;p&gt;Cool thing is, TypeScript also supports React out of the box by adding the following to your tsconfig…&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;json&quot;&gt;&lt;pre class=&quot;language-json&quot;&gt;&lt;code class=&quot;language-json&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;&quot;jsx&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;react&quot;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now for the real fun…&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 750px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/e23f0c027789b2abaa118552c25cfde6/be788/reactproptypes.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 66.66666666666666%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAANABQDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAQCAwX/xAAWAQEBAQAAAAAAAAAAAAAAAAADAQL/2gAMAwEAAhADEAAAAWZqmFrNUpf/xAAYEAEBAQEBAAAAAAAAAAAAAAABAgMSI//aAAgBAQABBQI14LVupqndc9KfTOC4/8QAFxEBAQEBAAAAAAAAAAAAAAAAAgEQEf/aAAgBAwEBPwFHhlz/xAAWEQEBAQAAAAAAAAAAAAAAAAAAARH/2gAIAQIBAT8BjH//xAAZEAADAQEBAAAAAAAAAAAAAAAAAREhEnH/2gAIAQEABj8CVRrwvJh5BNn/xAAbEAEAAgIDAAAAAAAAAAAAAAABABEhQTFhgf/aAAgBAQABPyFMQQdalyQDZM4XyVildnEts6CF3ln/2gAMAwEAAgADAAAAEBg//8QAFhEBAQEAAAAAAAAAAAAAAAAAABFh/9oACAEDAQE/ENZWv//EABcRAQEBAQAAAAAAAAAAAAAAAAEAIRH/2gAIAQIBAT8Q0pdGX//EAB0QAQACAgIDAAAAAAAAAAAAAAEAESFBMaFhcbH/2gAIAQEAAT8QNrCVbIQXuEBYGgQ9eYfuk5bbxs1UcX2WAuWu45BbynIF/ZddDbc//9k=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;reactproptypes&quot;
+        title=&quot;reactproptypes&quot;
+        src=&quot;/static/e23f0c027789b2abaa118552c25cfde6/be788/reactproptypes.jpg&quot;
+        srcset=&quot;/static/e23f0c027789b2abaa118552c25cfde6/e33f8/reactproptypes.jpg 293w,
+/static/e23f0c027789b2abaa118552c25cfde6/d5ce0/reactproptypes.jpg 585w,
+/static/e23f0c027789b2abaa118552c25cfde6/be788/reactproptypes.jpg 750w&quot;
+        sizes=&quot;(max-width: 750px) 100vw, 750px&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;PropTypes are a great way to catch runtime React bugs. But the frustrating thing about them is, you don’t know if something is broken generally until your app builds, the browser or hot loading reloads, and you see a cryptic red error message in the console.&lt;/p&gt;
+&lt;p&gt;Wouldn’t it be nice to just catch that bug while working on the component?&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;ts&quot;&gt;&lt;pre class=&quot;language-ts&quot;&gt;&lt;code class=&quot;language-ts&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;as&lt;/span&gt; React &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;react&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; formatPrice &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;../utils/formatPrice&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;IPriceProps&lt;/span&gt;  &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  num&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;number&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token builtin&quot;&gt;symbol&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;$&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;€&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;£&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; Price&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; React&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token constant&quot;&gt;SFC&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;IPriceProps&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  num&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token builtin&quot;&gt;symbol&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; IPriceProps&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+  &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;div&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
+    &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;h3&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;formatPrice&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;num&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;symbol&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;h3&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
+  &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;div&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now, check this out…&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/Screen-Capture-on-2018-01-29-at-22-52-24-00eb85547a5547ce980e33440829ea1f.gif&quot;&gt;&lt;/p&gt;
+&lt;p&gt;It’s amazing to be able to get intellisense on props. You can start typing, or in VSCode hit Control + Space to pull open the Intellisense menu.&lt;/p&gt;
+&lt;p&gt;You can even get intellisense on React classes as well…&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 585px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/09135ebf81c5e9b172ba72dcfefbfde4/da9f0/Screen-Shot-on-2018-01-29-at-22_55_40.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 61.19658119658119%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAMCAYAAABiDJ37AAAACXBIWXMAAAsSAAALEgHS3X78AAAB2ElEQVQoz5WTW3ObMBCF/f9/Uh/zkEyaFnMzkGIcxwnYXIXETcbGpytw4rjTTFrNnFkWpE9ntWJWthJF00GNTu6R8Q6lKJGxHeIsIoXIWYIdxSjeIC12SPMtkjTGMAzjutPp9K4ZJyDv9hgOPQEl/ndMoEs+U7CKnB1kieNwfJt2rdNZf767YC8OVcmJ4Kg5Q/S8ARMNCl6jKMUoVlZ0BA0Yr6h0Tt+mqPK3OYVo0TQtuq67AE/HA9Iwx62d4Ju2xp3m4ub7Ajf3Nn4s1nDXKSw/grfOYC+3Y1S5s4phvlRo5PFcMgEr2YNOGMlLBsOJ8LBYwbEdmKaN+dyA63goyUlFTlUcxcSHZ06RQwhxbko7NSNPSmh2hDsrgKmbMAwbBkEty4G/XCEInpBlDIxgRcHfxViF5/UGvu+fm0JSQ9AH3d3i1gxgmxYBrRGmaTqWyyfEcYo8L0fgRyloXTfY9/10hmUzOeSFwNx+xYPtQzeoZMsbgT8JGIY7cNUsWpzn/Mqh2kTKydQVsKUYBCG8Rx/a4wr35NBxqGTdgef+QlXVpOav6sndCFQNGUumOzTQPWRcUMcOtGONuqVS2gqSNpKd/KdLPmv2PWrVZUratqWF3Rd/xedS4zdKkpJYk1a5/AAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;Screen Shot on 2018 01 29 at 22 55 40&quot;
+        title=&quot;Screen Shot on 2018 01 29 at 22 55 40&quot;
+        src=&quot;/static/09135ebf81c5e9b172ba72dcfefbfde4/da9f0/Screen-Shot-on-2018-01-29-at-22_55_40.png&quot;
+        srcset=&quot;/static/09135ebf81c5e9b172ba72dcfefbfde4/bc34b/Screen-Shot-on-2018-01-29-at-22_55_40.png 293w,
+/static/09135ebf81c5e9b172ba72dcfefbfde4/da9f0/Screen-Shot-on-2018-01-29-at-22_55_40.png 585w&quot;
+        sizes=&quot;(max-width: 585px) 100vw, 585px&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;h3&gt;Conclusion&lt;/h3&gt;
+&lt;p&gt;Whether or not you decide to go full on TypeScript, it’s clear you can see many benefits even if you stick with pure JavaScript.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Using do expressions in Redux Reducers]]></title><description><![CDATA[There’s an interesting proposal that’s stage 1 currently (as of 9/26/2017) called . Thanks to the magic that is Babel, you can already go…]]></description><link>https://jonathancreamer.com/using-do-expressions-in-redux-reducers/</link><guid isPermaLink="false">https://jonathancreamer.com/using-do-expressions-in-redux-reducers/</guid><pubDate>Tue, 26 Sep 2017 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;There’s an interesting proposal that’s stage 1 currently (as of 9/26/2017) called &lt;code class=&quot;language-text&quot;&gt;do expressions&lt;/code&gt;. Thanks to the magic that is Babel, you can already go ahead and try this out with the do expression transform… &lt;a href=&quot;https://babeljs.io/docs/plugins/transform-do-expressions/&quot;&gt;https://babeljs.io/docs/plugins/transform-do-expressions/&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The basic idea is that you can have a block of code such as a few &lt;code class=&quot;language-text&quot;&gt;if&lt;/code&gt; statements, or a &lt;code class=&quot;language-text&quot;&gt;try catch&lt;/code&gt;, wrap them in a &lt;code class=&quot;language-text&quot;&gt;do { }&lt;/code&gt;, and whatever the final statement evaluates to, can be returned.&lt;/p&gt;
+&lt;p&gt;For example, have a look at a standard if block…&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;js&quot;&gt;&lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;fizzBuzz&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;let&lt;/span&gt; str&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+  &lt;span class=&quot;token keyword&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;var&lt;/span&gt; i&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; i &lt;span class=&quot;token operator&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; i&lt;span class=&quot;token operator&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;i &lt;span class=&quot;token operator&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;15&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      str &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;FizzBuzz&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;i &lt;span class=&quot;token operator&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      str &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Fizz&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;i &lt;span class=&quot;token operator&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      str &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Buzz&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      str &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; i&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; str&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Here you have to initialize str to something, then reassign it in each &lt;code class=&quot;language-text&quot;&gt;if&lt;/code&gt; block.&lt;/p&gt;
+&lt;p&gt;With &lt;code class=&quot;language-text&quot;&gt;do expressions&lt;/code&gt;, you can do the following…&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;js&quot;&gt;&lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;fizzBuzz&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;var&lt;/span&gt; i&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; i &lt;span class=&quot;token operator&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; i&lt;span class=&quot;token operator&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;i &lt;span class=&quot;token operator&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;15&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token string&quot;&gt;&quot;FizzBuzz&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;i &lt;span class=&quot;token operator&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token string&quot;&gt;&quot;Fizz&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;i &lt;span class=&quot;token operator&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token string&quot;&gt;&quot;Buzz&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        i&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;With &lt;code class=&quot;language-text&quot;&gt;do expressions&lt;/code&gt;, you don’t need to initialize &lt;code class=&quot;language-text&quot;&gt;str&lt;/code&gt;, you can simply return the entire &lt;code class=&quot;language-text&quot;&gt;do expression&lt;/code&gt;. Each &lt;code class=&quot;language-text&quot;&gt;if&lt;/code&gt; gets evaluated, and the one that ends up being truthy simply returns its value out of the expression.&lt;/p&gt;
+&lt;p&gt;So, how about for a Redux reducer?&lt;/p&gt;
+&lt;p&gt;Well, most Redux reducer’s are written in &lt;code class=&quot;language-text&quot;&gt;switch&lt;/code&gt; statements. Not a big deal, but I was curious if I could use a &lt;code class=&quot;language-text&quot;&gt;do&lt;/code&gt; and some &lt;code class=&quot;language-text&quot;&gt;if&lt;/code&gt; statements since I’m not the biggest fan of &lt;code class=&quot;language-text&quot;&gt;switch&lt;/code&gt; statements.&lt;/p&gt;
+&lt;p&gt;For example, this code is taken from a todomvc example…&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;js&quot;&gt;&lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;todos&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;state &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; initialState&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; action&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;switch&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;action&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;type&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;token constant&quot;&gt;ADD_TODO&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;...&lt;/span&gt;state&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        id&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; state&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;reduce&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;maxId&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; todo&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt;
+          Math&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;todo&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;id&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; maxId&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        completed&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        text&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; action&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;text
+      &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;token constant&quot;&gt;DELETE_TODO&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; state&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;filter&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;todo&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt;
+        todo&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;id &lt;span class=&quot;token operator&quot;&gt;!==&lt;/span&gt; action&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;id
+      &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; state&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Pretty straightforward, now check out the same reducer with &lt;code class=&quot;language-text&quot;&gt;if&lt;/code&gt;’s inside of a &lt;code class=&quot;language-text&quot;&gt;do expression&lt;/code&gt;…&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;js&quot;&gt;&lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;todos&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;state &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; initialState&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; type&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; text&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; id &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;type &lt;span class=&quot;token operator&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;token constant&quot;&gt;ADD_TODO&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; 
+      &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;...&lt;/span&gt;state&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        id&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; state&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;reduce&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;maxId&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; todo&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt;
+          Math&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;todo&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;id&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; maxId&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        completed&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        text
+      &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;type &lt;span class=&quot;token operator&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;token constant&quot;&gt;DELETE_TODO&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      state&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;filter&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;todo&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; todo&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;id &lt;span class=&quot;token operator&quot;&gt;!==&lt;/span&gt; id&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+    state&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;It’s nice that you don’t have to see &lt;code class=&quot;language-text&quot;&gt;return&lt;/code&gt; but once, and we’ve gotten rid of the &lt;code class=&quot;language-text&quot;&gt;switch&lt;/code&gt;. Not sure which one is better, but it’s cool to have different options to build reducers in.&lt;/p&gt;
+&lt;p&gt;Feel free to discuss in the comments below!&lt;/p&gt;</content:encoded></item><item><title><![CDATA[No title]]></title><description><![CDATA[ESLint is a JavaScript linter/style checker that has quickly risen in popularity for a number of reasons. First of all, it’s easily plugable…]]></description><link>https://jonathancreamer.com/setup-eslint-with-es6-in-sublime-text/</link><guid isPermaLink="false">https://jonathancreamer.com/setup-eslint-with-es6-in-sublime-text/</guid><pubDate>Fri, 31 Jul 2015 07:03:47 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;http://eslint.org/&quot;&gt;ESLint&lt;/a&gt; is a JavaScript linter/style checker that has quickly risen in popularity for a number of reasons. First of all, it’s easily plugable. Second, it’s sort of a hybrid between JSHint, and JSCS. Third, it’s written by none other than &lt;a href=&quot;https://twitter.com/slicknet&quot;&gt;Nicholas Zakas&lt;/a&gt;.&lt;/p&gt;
+&lt;h3&gt;Get Started with ESLint&lt;/h3&gt;
+&lt;p&gt;It’s super easy to use ESLint. You should already have Node.js installed, and then intsall ESLint…&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;npm install -g eslint
+# Or
+npm install eslint&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;You can install it either globally or locally. It’s easier to just have it globally though.&lt;/p&gt;
+&lt;h3&gt;Configure&lt;/h3&gt;
+&lt;p&gt;Create a &lt;code class=&quot;language-text&quot;&gt;.eslintrc&lt;/code&gt; in the root of your project. Then you can add &lt;code class=&quot;language-text&quot;&gt;globals&lt;/code&gt;, set up your environment with &lt;code class=&quot;language-text&quot;&gt;env&lt;/code&gt;, and add &lt;a href=&quot;http://eslint.org/docs/rules/&quot;&gt;rules&lt;/a&gt; as well.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;prettyprint&quot;&gt;&lt;pre class=&quot;language-prettyprint&quot;&gt;&lt;code class=&quot;language-prettyprint&quot;&gt;{
+  &amp;quot;globals&amp;quot;: {
+    // Put things like jQuery, etc
+    &amp;quot;jQuery&amp;quot;: true,
+    &amp;quot;$&amp;quot;: true
+  },
+  &amp;quot;env&amp;quot;: {
+    // I write for browser
+    &amp;quot;browser&amp;quot;: true,
+    // in CommonJS
+    &amp;quot;node&amp;quot;: true
+  },
+  // To give you an idea how to override rule options:
+  &amp;quot;rules&amp;quot;: {
+    // Tons of rules you can use, for example...
+    &amp;quot;quotes&amp;quot;: [1, &amp;quot;double&amp;quot;]
+  }
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;Rules&lt;/h4&gt;
+&lt;p&gt;To use a rule, add it’s name, then pass an array. The array is an array of options. The first is either…&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;0 - Disable the rule&lt;/li&gt;
+&lt;li&gt;1 - Warn about the rule&lt;/li&gt;
+&lt;li&gt;2 - Throw error about the rule&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Then the next arguments can configure different parameters per rule. In this case, we’re saying we want to throw a warning when single quotes are used rather than double quotes.&lt;/p&gt;
+&lt;p&gt;See the full list of rules &lt;a href=&quot;http://eslint.org/docs/rules/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;h2&gt;ES6 (2015)&lt;/h2&gt;
+&lt;p&gt;Since ESLint is so easily plugable and configurable, there are already ways of using it with the new version of Ecmascript.&lt;/p&gt;
+&lt;h3&gt;Parsers&lt;/h3&gt;
+&lt;p&gt;There are different types of parsers available. One of them is the &lt;code class=&quot;language-text&quot;&gt;babel-eslint&lt;/code&gt;…&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;prettyprint&quot;&gt;&lt;pre class=&quot;language-prettyprint&quot;&gt;&lt;code class=&quot;language-prettyprint&quot;&gt;&amp;quot;parser&amp;quot;: &amp;quot;babel-eslint&amp;quot;,&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt; This will allow you to utilize ES6 syntax.&lt;/p&gt;
+&lt;h2&gt;Sublime-Linter&lt;/h2&gt;
+&lt;p&gt;There’s a great plugin for Sublime Text called &lt;code class=&quot;language-text&quot;&gt;Sublime-Linter&lt;/code&gt;. Once it is installed, there are a bunch of other plugins for it as well, including one for ESLint! Install it with the &lt;code class=&quot;language-text&quot;&gt;Command+Shift+P&lt;/code&gt; shorcut…&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://d.pr/i/12f6i+&quot;&gt;&lt;/p&gt;
+&lt;p&gt;You then have to do a bit of configuration to get it actually running against your code. Go to &lt;code class=&quot;language-text&quot;&gt;Sublime Text -&amp;gt; Prefences -&amp;gt; Package Settings -&amp;gt; SublimeLinter -&amp;gt; Settings-User&lt;/code&gt;…&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://d.pr/i/TtXN+&quot;&gt;&lt;/p&gt;
+&lt;p&gt;In here, you have to tell Sublime-Linter where your &lt;code class=&quot;language-text&quot;&gt;node&lt;/code&gt; is installed using the &lt;code class=&quot;language-text&quot;&gt;paths&lt;/code&gt; option. You can do this by running &lt;code class=&quot;language-text&quot;&gt;which node&lt;/code&gt; on the command line. For example if you use &lt;code class=&quot;language-text&quot;&gt;nvm&lt;/code&gt; your config would look like this.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;prettyprint&quot;&gt;&lt;pre class=&quot;language-prettyprint&quot;&gt;&lt;code class=&quot;language-prettyprint&quot;&gt;&amp;quot;paths&amp;quot;: {
+  &amp;quot;linux&amp;quot;: [],
+  &amp;quot;osx&amp;quot;: [
+    &amp;quot;/Users/jonathanc/.nvm/versions/io.js/v2.0.0/bin&amp;quot;
+  ],
+  &amp;quot;windows&amp;quot;: []
+},&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;One other thing you might have to set depending on your syntax highlighter is an alias for your syntax highlighter. For ES6, Babel has a sublime plugin for syntax highlighting that you can install by searching for &lt;code class=&quot;language-text&quot;&gt;Babel&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Then in your config for the linter…&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;prettyprint&quot;&gt;&lt;pre class=&quot;language-prettyprint&quot;&gt;&lt;code class=&quot;language-prettyprint&quot;&gt;&amp;quot;syntax_map&amp;quot;: {
+  &amp;quot;JavaScript (Babel)&amp;quot;: &amp;quot;javascript&amp;quot;,
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now when you have invalid JavaScript including ES6, you’ll see warnings in the code…&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://d.pr/i/10oU3+&quot;&gt;&lt;/p&gt;
+&lt;p&gt;That should help you get started linting, and writing better JavaScript in Sublime Text!&lt;/p&gt;</content:encoded></item></channel></rss>
