@@ -2,7 +2,7 @@
 draft: false
 layout: post
 title: Why would you NOT use TypeScript?
-image: img/testimg1.jpg
+image: img/f18.jpg
 author: Jonathan Creamer
 date: 2018-02-01T07:03:47.149Z
 tags: 
@@ -34,7 +34,7 @@ On top of that, it also uses something called Automatic Type Definitions using t
 ### From JS to TS, TypeScript's got you
 In the following example, we're simply formatting a price string.
 
-```prettyprint lang-js
+```ts
 const formatPrice = (num, symbol = "$") =>
   `${symbol}${num.toFixed(2)}`;
 
@@ -45,7 +45,7 @@ It could be easy to forget that if pass a string here, this function will asplod
 
 Simply adding types can save you runtime bugs...
 
-```prettyprint lang-ts
+```ts
 const formatPrice = (num: number, symbol = "$": string) =>
   `${symbol}${num.toFixed(2)}`;
 
@@ -58,7 +58,7 @@ But, there's even better news...
 
 You may or may not already be a big user of JSDoc, but if you are, you will be pleased as punch to know that as of a recent version of TypeScript, you can add `// @ts-check` to the top of a JavaScript file, and get typechcking in it!
 
-```
+```js
 // @ts-check
 
 /**
@@ -77,14 +77,14 @@ Here's more info about what all you can do with JSDoc... https://github.com/Micr
 
 With VSCode you can enable full type typechecking with the following User Settings option...
 
-```prettyprint lang-js
+```ts
 "javascript.implicitProjectConfig.checkJs": true
 ```
 
 ### React
 Cool thing is, TypeScript also supports React out of the box by adding the following to your tsconfig...
 
-```prettyprint lang-json
+```json
 {
   "jsx": "react"
 }
@@ -98,7 +98,7 @@ PropTypes are a great way to catch runtime React bugs. But the frustrating thing
 
 Wouldn't it be nice to just catch that bug while working on the component?
 
-```prettyprint lang-ts
+```ts
 import * as React from "react";
 import formatPrice from "../utils/formatPrice";
 
