@@ -49,18 +49,15 @@ export interface WebsiteConfig {
 }
 
 const config: WebsiteConfig = {
-  title: 'Ghost',
-  description: 'The professional publishing platform',
-  coverImage: 'img/blog-cover.jpg',
+  title: 'Jonathan Creamer',
+  description: 'Living, learning, developing. Write about what I do, what I love, and what I learn. Lonely Planet. JavaScript, React, Ruby, Node, Rails, C#, Microsoft MVP.',
+  coverImage: 'img/meconnectr.jpeg',
   logo: 'img/ghost-logo.png',
   lang: 'en',
-  siteUrl: 'https://gatsby-casper.netlify.com',
-  facebook: 'https://www.facebook.com/ghost',
-  twitter: 'https://twitter.com/tryghost',
+  siteUrl: 'https://jonathancreamer.com',
+  facebook: 'https://www.facebook.com/jcreamer898',
+  twitter: 'https://twitter.com/jcreamer898',
   showSubscribe: true,
-  mailchimpAction: 'https://twitter.us19.list-manage.com/subscribe/post?u=a89b6987ac248c81b0b7f3a0f&amp;id=7d777b7d75',
-  mailchimpName: 'b_a89b6987ac248c81b0b7f3a0f_7d777b7d75',
-  mailchimpEmailFieldName: 'MERGE0',
   googleSiteVerification: 'GoogleCode',
   footer: 'is based on Gatsby Casper',
 };

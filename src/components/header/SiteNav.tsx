@@ -66,12 +66,13 @@ const NavStyles = css`
     margin: 0;
     padding: 10px 12px;
     color: #fff;
-    opacity: 0.8;
+    opacity: 1;
+    font-weight: bold;
   }
 
   li a:hover {
     text-decoration: none;
-    opacity: 1;
+    opacity: 0.8;
   }
 `;
 
