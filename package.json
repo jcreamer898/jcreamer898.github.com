@@ -9,7 +9,7 @@
     "build": "gatsby build",
     "clean": "rimraf public",
     "dev": "gatsby develop",
-    "deploy": "gatsby build --prefix-paths && gh-pages -d public",
+    "deploy": "gatsby build && gh-pages -d public -b master",
     "lint": "eslint src/**/**/*.tsx",
     "lint:fix": "eslint --fix src/**/*/*.tsx",
     "start": "npm run dev",
