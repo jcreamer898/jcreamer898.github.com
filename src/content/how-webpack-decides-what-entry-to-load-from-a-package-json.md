@@ -2,7 +2,7 @@
 draft: false
 layout: post
 title: How webpack decides what entry to load from a package
-# image: img/testimg-cover.jpg
+image: img/entry.jpg
 author: Jonathan Creamer
 date: 2018-09-30T07:03:47.149Z
 tags: 

@@ -2,6 +2,7 @@
 draft: false
 layout: post
 title: WebPack production environment is NOT the NODE_ENV or BABEL_ENV environment variable
+image: img/testimg1.jpg
 author: Jonathan Creamer
 date: 2018-09-30T07:03:47.149Z
 tags: 
@@ -41,7 +42,7 @@ I then found the exact quote from the old [62.6 docs](https://babeljs.io/docs/en
 
 Alright so basically that means we've been running Babel as dev mode! 
 
-![](/content/images/2019/04/doh.gif)
+![](img/doh.gif)
 
 What does that `--env.production` thing even do?
 
