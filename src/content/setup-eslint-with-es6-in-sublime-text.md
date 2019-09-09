@@ -1,7 +1,7 @@
 ---
 draft: false
 layout: post
-title: 
+title: Setup ESLint with ES6 in Sublime Text
 image: img/sublime.jpg
 author: Jonathan Creamer
 date: 2015-07-31T07:03:47.149Z
