@@ -3,6 +3,8 @@
 <url> <loc>https://jonathancreamer.com/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://jonathancreamer.com/2</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://jonathancreamer.com/setup-eslint-with-es6-in-sublime-text/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://jonathancreamer.com/advanced-webpack-part-2-code-splitting/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://jonathancreamer.com/advanced-webpack-part-3-creating-a-custom-notifier-plugin/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://jonathancreamer.com/testing-typescript-classes-with-jest-and-jest-mocks/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://jonathancreamer.com/using-do-expressions-in-redux-reducers/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://jonathancreamer.com/why-would-you-not-use-typescript/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
@@ -13,6 +15,13 @@
 <url> <loc>https://jonathancreamer.com/tags/sublime/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://jonathancreamer.com/tags/es-6/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://jonathancreamer.com/tags/eslint/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://jonathancreamer.com/tags/webpack/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://jonathancreamer.com/tags/plugin/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://jonathancreamer.com/tags/package/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://jonathancreamer.com/tags/advanced/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://jonathancreamer.com/tags/code-splitting/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://jonathancreamer.com/tags/lazy-load/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://jonathancreamer.com/tags/import/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://jonathancreamer.com/tags/typescript/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://jonathancreamer.com/tags/testing/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://jonathancreamer.com/tags/jest/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
@@ -28,11 +37,10 @@
 <url> <loc>https://jonathancreamer.com/tags/types/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://jonathancreamer.com/tags/jsdoc/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://jonathancreamer.com/tags/vscode/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
-<url> <loc>https://jonathancreamer.com/tags/webpack/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://jonathancreamer.com/tags/entry/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
-<url> <loc>https://jonathancreamer.com/tags/package/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://jonathancreamer.com/tags/babel/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://jonathancreamer.com/tags/node/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://jonathancreamer.com/author/jonathan-creamer/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://jonathancreamer.com/about/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://jonathancreamer.com/talks/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 </urlset>
