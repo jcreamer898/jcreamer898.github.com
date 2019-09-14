@@ -1,15 +1,15 @@
 // tslint:disable:no-http-string
+import { css } from '@emotion/core';
+import styled from '@emotion/styled';
 import { Link } from 'gatsby';
 import * as React from 'react';
-import styled from '@emotion/styled';
-import { css } from '@emotion/core';
-
 import { SocialLink } from '../../styles/shared';
 import config from '../../website-config';
 import Facebook from '../icons/facebook';
 import Twitter from '../icons/twitter';
 import SubscribeModal from '../subscribe/SubscribeOverlay';
 import SiteNavLogo from './SiteNavLogo';
+
 
 const HomeNavRaise = css`
   @media (min-width: 900px) {
@@ -139,6 +139,9 @@ class SiteNav extends React.Component<SiteNavProps> {
             </li>
             <li role="menuitem">
               <Link to="/about">About</Link>
+            </li>
+            <li role="menuitem">
+              <Link to="/talks">Talks</Link>
             </li>
             <li role="menuitem">
               <Link to="/tags/getting-started/">Getting Started</Link>
