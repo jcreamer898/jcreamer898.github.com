@@ -3,6 +3,7 @@
 <url> <loc>https://jonathancreamer.com/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://jonathancreamer.com/2</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://jonathancreamer.com/3</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://jonathancreamer.com/4</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://jonathancreamer.com/adding-clarity-to-scope-inheritance-in-angular/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://jonathancreamer.com/working-with-all-the-different-kinds-of-scopes-in-angular/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://jonathancreamer.com/using-jquery-ajax-in-an-angular-app/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
@@ -21,6 +22,7 @@
 <url> <loc>https://jonathancreamer.com/debugging-node-and-jest-tests-with-vs-codes-debuggger/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://jonathancreamer.com/how-webpack-decides-what-entry-to-load-from-a-package-json/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://jonathancreamer.com/webpack-production-environment-is-not-the-node_env-or-babel_env-environment-variable/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://jonathancreamer.com/creating-a-custom-typescript-fetch-api-for-your-team/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://jonathancreamer.com/tags/angular/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://jonathancreamer.com/tags/scope/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://jonathancreamer.com/tags/inheritance/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
@@ -63,6 +65,8 @@
 <url> <loc>https://jonathancreamer.com/tags/entry/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://jonathancreamer.com/tags/babel/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://jonathancreamer.com/tags/node/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://jonathancreamer.com/tags/fetch/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://jonathancreamer.com/tags/api/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://jonathancreamer.com/author/jonathan-creamer/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://jonathancreamer.com/about/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://jonathancreamer.com/talks/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
