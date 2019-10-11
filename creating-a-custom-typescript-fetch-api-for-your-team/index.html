@@ -23,7 +23,8 @@
 <p>Once a team and their problem domain, and/or API becomes big enough, even in the most simplest of cases, it becomes very helpful to have one consistent way to fetch data.</p>
 <p>With TypeScript, you can make a very simple, and very re-usable API client pretty easily, and it all starts with interfaces.</p>
 <h2>IDD</h2>
-<p>We’re programmers and we love “X”-DD, where <code class="language-text">X = Test | Behavior | Unit | .....</code>. I’d like to propose another one…</p>
+<p>We’re programmers and we love “X”-DD, where <code class="language-text">X = Test | Behavior | Unit | .....</code>.</p>
+<p>I’d like to propose another one..  </p>
 <blockquote>
 <p>Interface Driven Development</p>
 </blockquote>
@@ -88,8 +89,6 @@
 <span class="token punctuation">}</span></code></pre></div>
 <p>Notice the use of the <code class="language-text">&lt;ReturnType&gt;</code> above, this is what in programming terms is called a <a href="https://www.typescriptlang.org/docs/handbook/generics.html">generic</a>.</p>
 <p>It basically allows you to pass types around to different functions, almost like a function parameter. You can explicitly declare them as in our example above, or they can implicitly be set by the types you assign in your function parameters.</p>
-<p>For example, in many cases you might have a different response from your API then you want to use in your actualy UI. So, you might write some kind of transforation function.</p>
-<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text"></code></pre></div>
 <p>Now we’ve handled fetching, and error handling for our base client API, so let’s start fetching the <code class="language-text">GithubUser.</code></p>
 <p><img src="https://d.pr/i/L3GJlr+"/></p>
 <p>Once many of these domain models have interfaces around them, you all the sudden have built in API documentation too!</p>
