@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
   siteMetadata: {
     title: 'Jonathan Creamer',
-    description: 'Living, learning, developing. Write about what I do, what I love, and what I learn. Lonely Planet. JavaScript, React, Ruby, Node, Rails, C#, Microsoft MVP.',
+    description: 'Living, learning, developing. Write about what I do, what I love, and what I learn. #javascript, #react, #node, #fe-infra',
     siteUrl: 'https://jonathancreamer.com', // full path to blog - no ending slash
   },
   mapping: {
@@ -47,7 +47,7 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-canonical-urls',
       options: {
-        siteUrl: 'https://gatsby-casper.netlify.com',
+        siteUrl: 'https://jonathancreamer.com',
       },
     },
     'gatsby-plugin-emotion',

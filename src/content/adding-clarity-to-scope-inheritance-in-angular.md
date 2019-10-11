@@ -126,7 +126,7 @@ See how you can see the `Child` has it's `.prototype` property. Then, the `__pro
 
 It's basically a tree...
 
-```prettyprint
+```text
 Child
 |
  \
@@ -191,7 +191,7 @@ All other scopes in angular come from this `$rootScope` by way of inheritance in
 
 When you have something like this with an `ng-app` and an `ng-controller`...
 
-```prettyprint lang-html
+```html
 <body ng-app="Demo">
 	<div ng-controller="FooCtrl"></foo>
 </body>
@@ -284,7 +284,7 @@ angular.module("Demo", [])
 
 And this HTML...
 
-```prettyprint lang-html
+```html
 <body ng-app="Demo">
   <div ng-controller="ChildCtrl">
   </div>
@@ -317,7 +317,7 @@ angular.module("Demo", [])
    $scope.user.name = "changes foo in ChildCtrl";
  });
 ```
-```prettyprint lang-html
+```html
 <body ng-app="Demo">
   <div ng-controller="ChildCtrl">
     <div ng-controller="AnotherChildCtrl">
@@ -336,13 +336,13 @@ In general, try not to just assign stuff directly to `$scope` as primitives. You
 
 Aka...
 
-```prettyprint lang-html
+```html
 {{user.name}}
 ```
 
 vs.
 
-```prettyprint lang-html
+```html
 {{name}}
 ```
 

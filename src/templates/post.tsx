@@ -1,12 +1,11 @@
+import { css } from '@emotion/core';
+import styled from '@emotion/styled';
 import { graphql, Link } from 'gatsby';
 import Img from 'gatsby-image';
 import * as _ from 'lodash';
 import { setLightness } from 'polished';
 import * as React from 'react';
-import styled from '@emotion/styled';
-import { css } from '@emotion/core';
 import { Helmet } from 'react-helmet';
-
 import AuthorCard from '../components/AuthorCard';
 import Footer from '../components/Footer';
 import SiteNav from '../components/header/SiteNav';
@@ -21,6 +20,7 @@ import IndexLayout from '../layouts';
 import { colors } from '../styles/colors';
 import { inner, outer, SiteHeader, SiteMain } from '../styles/shared';
 import config from '../website-config';
+
 
 const PostTemplate = css`
   .site-main {
@@ -301,6 +301,21 @@ const PageTemplate: React.FC<PageTemplateProps> = props => {
 
               <PostFullFooter>
                 <AuthorCard author={post.frontmatter.author} />
+                <div id="disqus_thread"></div>
+                <script dangerouslySetInnerHTML={{__html: `/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'jonathancreamercom'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();`}}>
+
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" className="dsq-brlink">comments powered by <span className="logo-disqus">Disqus</span></a>
+
                 <PostFullFooterRight authorId={post.frontmatter.author.id} />
               </PostFullFooter>
             </article>

@@ -27,7 +27,7 @@ You can install it either globally or locally. It's easier to just have it globa
 ### Configure
 Create a `.eslintrc` in the root of your project. Then you can add `globals`, set up your environment with `env`, and add [rules](http://eslint.org/docs/rules/) as well.
 
-```prettyprint lang-js
+```js
 {
   "globals": {
     // Put things like jQuery, etc
@@ -65,7 +65,7 @@ Since ESLint is so easily plugable and configurable, there are already ways of u
 ### Parsers
 There are different types of parsers available. One of them is the `babel-eslint`...
 
-```prettyprint lang-js
+```js
 "parser": "babel-eslint",
 ```
  
@@ -82,7 +82,7 @@ You then have to do a bit of configuration to get it actually running against yo
 
 In here, you have to tell Sublime-Linter where your `node` is installed using the `paths` option. You can do this by running `which node` on the command line. For example if you use `nvm` your config would look like this.
 
-```prettyprint lang-json
+```json
 "paths": {
   "linux": [],
   "osx": [
@@ -96,7 +96,7 @@ One other thing you might have to set depending on your syntax highlighter is an
 
 Then in your config for the linter...
 
-```prettyprint lang-json
+```json
 "syntax_map": {
   "JavaScript (Babel)": "javascript",
 }

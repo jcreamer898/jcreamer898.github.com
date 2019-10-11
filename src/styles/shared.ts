@@ -1,7 +1,7 @@
 import { css } from '@emotion/core';
 import styled from '@emotion/styled';
-import { colors } from './colors';
 import { darken, lighten } from 'polished';
+import { colors } from './colors';
 
 export const outer = css`
   position: relative;
@@ -35,7 +35,7 @@ export const SiteDescription = styled.h2`
   font-size: 2.2rem;
   font-weight: 300;
   letter-spacing: 0.5px;
-  opacity: 0.8;
+  opacity: 1;
 `;
 
 export const PostFeed = css`

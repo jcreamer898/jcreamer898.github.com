@@ -60,6 +60,9 @@ const config: WebsiteConfig = {
   showSubscribe: true,
   googleSiteVerification: 'GoogleCode',
   footer: 'is based on Gatsby Casper',
+  mailchimpAction: "https://gmail.us20.list-manage.com/subscribe/post?u=8645d908fb86dd803b112d821&amp;id=b2076707cb",
+  mailchimpEmailFieldName: "EMAIL",
+  mailchimpName: "b_8645d908fb86dd803b112d821_b2076707cb"
 };
 
 export default config;
