@@ -18,7 +18,9 @@ Once a team and their problem domain, and/or API becomes big enough, even in the
 With TypeScript, you can make a very simple, and very re-usable API client pretty easily, and it all starts with interfaces.
 
 ## IDD
-We're programmers and we love "X"-DD, where `X = Test | Behavior | Unit | .....`. I'd like to propose another one...
+We're programmers and we love "X"-DD, where `X = Test | Behavior | Unit | .....`.
+
+I'd like to propose another one..  
 
 > Interface Driven Development
 
@@ -96,12 +98,6 @@ const fetchResource = async <ReturnType>(url: string, options?: FetchOptions) =>
 Notice the use of the `<ReturnType>` above, this is what in programming terms is called a [generic](https://www.typescriptlang.org/docs/handbook/generics.html).
 
 It basically allows you to pass types around to different functions, almost like a function parameter. You can explicitly declare them as in our example above, or they can implicitly be set by the types you assign in your function parameters.
-
-For example, in many cases you might have a different response from your API then you want to use in your actualy UI. So, you might write some kind of transforation function.
-
-```
-
-```
 
 Now we've handled fetching, and error handling for our base client API, so let's start fetching the `GithubUser.`
 
