@@ -21,7 +21,6 @@ import { colors } from '../styles/colors';
 import { inner, outer, SiteHeader, SiteMain } from '../styles/shared';
 import config from '../website-config';
 
-
 const PostTemplate = css`
   .site-main {
     background: #fff;
